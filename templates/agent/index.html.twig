@@ -1,0 +1,221 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des agents
+{% endblock %}
+
+
+{% block body %}
+
+
+	<!-- Main navbar -->
+	{{ include('partial/navbar.html.twig')}}
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+		<div
+		class="page-content"> <!-- Main sidebar -->
+		<div
+			class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+
+			<!-- Sidebar mobile toggler -->
+			<div class="sidebar-mobile-toggler text-center">
+				<a href="#" class="sidebar-mobile-main-toggle">
+					<i class="icon-arrow-left8"></i>
+				</a>
+				Navigation
+				<a href="#" class="sidebar-mobile-expand">
+					<i class="icon-screen-full"></i>
+					<i class="icon-screen-normal"></i>
+				</a>
+			</div>
+			<!-- /sidebar mobile toggler -->
+
+
+			<!-- Sidebar content -->
+			<div
+				class="sidebar-content">
+
+				<!-- User menu -->
+				<div class="sidebar-user">
+					{% block content %}
+						<div class="card-body">
+							<div class="media">
+								<div class="mr-3">
+									<a href="#"><img src="{{ asset('admin-assets/images/placeholders/placeholder.jpg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
+								</div>
+
+								<div class="media-body">
+									<div class="media-title font-weight-semibold">
+										{% if app.user %}
+											{{ app.user.firstName }}
+											{{ app.user.lastName }}
+										{% endif %}
+									</div>
+									<div class="font-size-xs opacity-50"></div>
+								</div>
+
+								<div class="ml-3 align-self-center">
+									<a href="#" class="text-white">
+										<i class="icon-cog3"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endblock %}
+				</div>
+				<!-- /user menu -->
+
+
+				<!-- Main navigation -->
+				{{ include('partial/main.navigation.html.twig')}}
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+
+			<!-- Main content -->
+				<div
+				class="content-wrapper"> <!-- Page header -->
+				<div class="page-header page-header-light">
+					<div class="page-header-content header-elements-md-inline">
+						<div class="page-title d-flex">
+							<h4>
+								<i class="icon-arrow-left52 mr-2"></i>
+								<span class="font-weight-semibold">Gestion</span>
+								- Agent
+							</h4>
+							<a href="#" class="header-elements-toggle text-default d-md-none">
+								<i class="icon-more"></i>
+							</a>
+						</div>
+
+
+					</div>
+
+
+				</div>
+				<!-- /page header -->
+
+				<!-- Content area -->
+				<div
+					class="content">
+					<!-- Basic datatable -->
+					<div class="card">
+						<div class="card-header header-elements-inline">
+							<h5 class="card-title">Liste Des Agents</h5>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
+								Nouveau Agent
+							</button>
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Ajouter Agent</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										{{ form_start(form) }}
+										{{ form_widget(form) }}
+										<button class="btn btn-success" type="submit">Enregisterer</button>
+										{{ form_end(form) }}
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<table class="table datatable-basic">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Nom</th>
+									<th>Prénom</th>
+									<th>Email</th>
+									<th>Role</th>
+
+									<th class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for agent in agents %}
+
+
+									<tr>
+										<td>{{agent.id }}</td>
+										<td>{{agent.firstName }}</td>
+										<td>{{agent.lastName }}</td>
+										<td>{{agent.email }}</td>
+										<td>{{agent.role }}</td>
+
+										<td>
+
+											<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal_theme_danger">supprimer
+
+											</buttton>
+
+										</td>
+										<td>
+											<a href="{{ path('modifierAgent',{'id':agent.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+										</td>
+									</tr>
+
+
+									<!-- Danger modal -->
+									<div id="modal_theme_danger" class="modal fade" tabindex="-1">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header bg-danger">
+													<h6 class="modal-title">Confirmation</h6>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<div class="modal-body">
+													<p>Etes vous sur de le supprimer
+														
+													</p>
+
+
+												</div>
+
+												<div class="modal-footer">
+													<button type="button" class="btn btn-link" data-dismiss="modal">Annuler</button>
+													<a href="{{ path('supprimer_agent',{'id':agent.id}) }}" class="btn bg-danger">Confirmer</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /default modal -->
+
+
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<!-- /basic datatable -->
+
+
+				</div>
+				<!-- /content area -->
+			</div>
+			<!-- /main content -->
+			<!-- /page content -->
+		{% endblock %}

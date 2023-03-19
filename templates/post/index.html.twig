@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!
+{% endblock %}
+
+
+{% block body %}
+
+
+	<!-- Main navbar -->
+	{{ include('partial/navbar.html.twig')}}
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+		<div
+		class="page-content"> <!-- Main sidebar -->
+		<div
+			class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+
+			<!-- Sidebar mobile toggler -->
+			<div class="sidebar-mobile-toggler text-center">
+				<a href="#" class="sidebar-mobile-main-toggle">
+					<i class="icon-arrow-left8"></i>
+				</a>
+				Navigation
+				<a href="#" class="sidebar-mobile-expand">
+					<i class="icon-screen-full"></i>
+					<i class="icon-screen-normal"></i>
+				</a>
+			</div>
+			<!-- /sidebar mobile toggler -->
+
+
+			<!-- Sidebar content -->
+			<div
+				class="sidebar-content">
+
+				<!-- User menu -->
+				<div class="sidebar-user">
+					{% block content %}
+						<div class="card-body">
+							<div class="media">
+								<div class="mr-3">
+									<a href="#"><img src="{{ asset('admin-assets/images/placeholders/placeholder.jpg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
+								</div>
+
+								<div class="media-body">
+									<div class="media-title font-weight-semibold">
+										{% if app.user %}
+											{{ app.user.firstName }}
+											{{ app.user.lastName }}
+										{% endif %}
+									</div>
+									<div class="font-size-xs opacity-50"></div>
+								</div>
+
+								<div class="ml-3 align-self-center">
+									<a href="#" class="text-white">
+										<i class="icon-cog3"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					{% endblock %}
+				</div>
+				<!-- /user menu -->
+
+
+				<!-- Main navigation -->
+				{{ include('partial/main.navigation.html.twig')}}
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+
+			<!-- Main content -->
+				<div
+				class="content-wrapper"> <!-- Page header -->
+				<div class="page-header page-header-light">
+					<div class="page-header-content header-elements-md-inline">
+						<div class="page-title d-flex">
+							<h4>
+								<i class="icon-arrow-left52 mr-2"></i>
+								<span class="font-weight-semibold">Gestion</span>
+								- Poste
+							</h4>
+							<a href="#" class="header-elements-toggle text-default d-md-none">
+								<i class="icon-more"></i>
+							</a>
+						</div>
+
+
+					</div>
+
+
+				</div>
+				<!-- /page header -->
+
+				<!-- Content area -->
+				<div
+					class="content">
+					<!-- Basic datatable -->
+					<div class="card">
+						<div class="card-header header-elements-inline">
+							<h5 class="card-title">Liste des postes</h5>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
+								Nouvelle Poste
+							</button>
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Ajouter Poste</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										{{ form_start(form) }}
+										{{ form_widget(form) }}
+										<button class="btn btn-success" type="submit">Enregisterer</button>
+										{{ form_end(form) }}
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<table class="table datatable-basic">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Name</th>
+									<th>Adresse</th>
+									<th class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for post in posts %}
+
+
+									<tr>
+										<td>{{post.id }}</td>
+										<td>{{post.label }}</td>
+										<td>{{post.address }}</td>
+
+										<td>
+											<a href="{{ path('app_post_delete',{'id':post.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+											<a href="{{ path('app_post_edit',{'id':post.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<!-- /basic datatable -->
+
+
+				</div>
+				<!-- /content area -->
+
+				<!-- Footer -->
+				<div class="navbar navbar-expand-lg navbar-light">
+					<div class="text-center d-lg-none w-100">
+						<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+							<i class="icon-unfold mr-2"></i>
+							Footer
+						</button>
+					</div>
+
+					<div class="navbar-collapse collapse" id="navbar-footer">
+						<span class="navbar-text">
+							&copy; 2023.
+							<a href="#">---</a>
+							by
+							<a href="http://themeforest.net/user/Kopyov" target="_blank">Hanadi</a>
+						</span>
+
+					</div>
+				</div>
+				<!-- /footer -->
+			</div>
+			<!-- /main content -->
+			<!-- /page content -->
+
+		{% endblock %}

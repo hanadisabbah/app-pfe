@@ -1,0 +1,289 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+
+
+	<!-- Main navbar -->
+	{{ include('partial/navbar.html.twig')}}
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+		<div
+		class="page-content"> <!-- Main sidebar -->
+		<div
+			class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+
+			<!-- Sidebar mobile toggler -->
+			<div class="sidebar-mobile-toggler text-center">
+				<a href="#" class="sidebar-mobile-main-toggle">
+					<i class="icon-arrow-left8"></i>
+				</a>
+				Navigation
+				<a href="#" class="sidebar-mobile-expand">
+					<i class="icon-screen-full"></i>
+					<i class="icon-screen-normal"></i>
+				</a>
+			</div>
+			<!-- /sidebar mobile toggler -->
+
+
+			<!-- Sidebar content -->
+			<div
+				class="sidebar-content">
+
+				<!-- User menu -->
+				<div class="sidebar-user">
+					<div class="card-body">
+						<div class="media">
+							<div class="mr-3">
+								<a href="#"><img src="{{ asset('admin-assets/images/placeholders/placeholder.jpg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
+							</div>
+
+							<div class="media-body">
+								<div class="media-title font-weight-semibold">Livreur</div>
+								<div class="font-size-xs opacity-50"></div>
+							</div>
+
+							<div class="ml-3 align-self-center">
+								<a href="#" class="text-white">
+									<i class="icon-cog3"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /user menu -->
+
+
+				<!-- Main navigation -->
+				{{ include('partial/main.navigation.html.twig')}}
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div
+			class="content-wrapper">
+
+			<!-- Page header -->
+			<div class="page-header page-header-light">
+				<div class="page-header-content header-elements-md-inline">
+					<div class="page-title d-flex">
+						<h4>
+							<i class="icon-arrow-left52 mr-2"></i>
+							<span class="font-weight-semibold">Home</span>
+							- Dashboard</h4>
+						<a href="#" class="header-elements-toggle text-default d-md-none">
+							<i class="icon-more"></i>
+						</a>
+					</div>
+
+					<div class="header-elements d-none">
+						<div class="d-flex justify-content-center">
+							<a href="#" class="btn btn-link btn-float text-default">
+								<i class="icon-bars-alt text-primary"></i>
+								<span>Statistics</span>
+							</a>
+							<a href="#" class="btn btn-link btn-float text-default">
+								<i class="icon-calculator text-primary"></i>
+								<span>Invoices</span>
+							</a>
+							<a href="#" class="btn btn-link btn-float text-default">
+								<i class="icon-calendar5 text-primary"></i>
+								<span>Schedule</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+					<div class="d-flex">
+						<div class="breadcrumb">
+							<a href="index.html" class="breadcrumb-item">
+								<i class="icon-home2 mr-2"></i>
+								Home</a>
+							<span class="breadcrumb-item active">Dashboard</span>
+						</div>
+
+						<a href="#" class="header-elements-toggle text-default d-md-none">
+							<i class="icon-more"></i>
+						</a>
+					</div>
+
+					<div class="header-elements d-none">
+						<div class="breadcrumb justify-content-center">
+							<a href="#" class="breadcrumb-elements-item">
+								<i class="icon-comment-discussion mr-2"></i>
+								Support
+							</a>
+
+							<div class="breadcrumb-elements-item dropdown p-0">
+								<a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-gear mr-2"></i>
+									Settings
+								</a>
+
+								<div class="dropdown-menu dropdown-menu-right">
+									<a href="#" class="dropdown-item">
+										<i class="icon-user-lock"></i>
+										Account security</a>
+									<a href="#" class="dropdown-item">
+										<i class="icon-statistics"></i>
+										Analytics</a>
+									<a href="#" class="dropdown-item">
+										<i class="icon-accessibility"></i>
+										Accessibility</a>
+									<div class="dropdown-divider"></div>
+									<a href="#" class="dropdown-item">
+										<i class="icon-gear"></i>
+										All settings</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /page header -->
+
+
+			<!-- Content area -->
+			<div
+				class="content">
+
+
+				<!-- Dashboard content -->
+				<div class="row">
+					<div class="col-xl-8">
+
+
+						hanadi etjarebbbbbbb
+
+
+						<div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+							<div class="datatable-header">
+								<div id="DataTables_Table_1_filter" class="dataTables_filter">
+									<label>
+										<span>Filter:</span>
+										<input type="search" class="" placeholder="Type to filter..." aria-controls="DataTables_Table_1"></label>
+								</div>
+								<div class="dataTables_length" id="DataTables_Table_1_length">
+									<label>
+										<span>Show:</span>
+										<select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class="select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+										</select>
+										<span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;">
+											<span class="selection">
+												<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-DataTables_Table_1_length-wu-container">
+													<span class="select2-selection__rendered" id="select2-DataTables_Table_1_length-wu-container" title="10">10</span>
+													<span class="select2-selection__arrow" role="presentation">
+														<b role="presentation"></b>
+													</span>
+												</span>
+											</span>
+											<span class="dropdown-wrapper" aria-hidden="true"></span>
+										</span>
+									</label>
+								</div>
+							</div>
+							<div class="datatable-scroll">
+								<table class="table datatable-pagination dataTable no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info">
+									<thead>
+										<tr role="row">
+											<th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Prénom: activate to sort column descending">Prénom</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Nom: activate to sort column ascending">Nom</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Téléphone: activate to sort column ascending">Téléphone</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Type: activate to sort column ascending">Type</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Modifier: activate to sort column ascending">Modifier</th>
+											<th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Suppression: activate to sort column ascending">Suppression</th>
+											<th class="text-center sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">Actions</th>s
+										</tr>
+									</thead>
+									<tbody>
+
+
+										<tr role="row" class="odd">
+
+											<td class="text-center">
+												<div class="list-icons">
+													<div class="dropdown">
+														<a href="#" class="list-icons-item" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+
+														<div class="dropdown-menu dropdown-menu-right">
+															<a href="#" class="dropdown-item">
+																<i class="icon-file-pdf"></i>
+																Export to .pdf</a>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr role="row" class="even">
+
+
+											<td class="text-center">
+												<div class="list-icons">
+													<div class="dropdown">
+														<a href="#" class="list-icons-item" data-toggle="dropdown">
+															<i class="icon-menu9"></i>
+														</a>
+
+														<div class="dropdown-menu dropdown-menu-right">
+															<a href="#" class="dropdown-item">
+																<i class="icon-file-pdf"></i>
+																Export to .pdf</a>
+
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+							<div class="datatable-footer">
+								<div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">Affichage de 1 à 10 sur 10 entrées</div>
+								<div class="dataTables_paginate paging_simple" id="DataTables_Table_1_paginate">
+									<a class="paginate_button previous disabled" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" id="DataTables_Table_1_previous">← Précédent</a>
+									<a class="paginate_button next" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0" id="DataTables_Table_1_next">suivant →</a>
+								</div>
+							</div>
+						</div>
+
+
+						hanadi etjarebbbb
+
+
+						<!-- /dashboard content -->
+
+					</div>
+					<!-- /content area -->
+
+
+					<!-- Footer -->
+					{{ include('partial/footer.html.twig') }}
+					<!-- /footer -->
+
+				</div>
+				<!-- /main content -->
+
+			</div>
+			<!-- /page content -->
+
+		{% endblock %}
