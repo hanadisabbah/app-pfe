@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Courrier;
+use App\Entity\Historique;
 use App\Form\CourrierStatusType;
 use App\Form\CourrierType;
+use App\Form\HistoriqueType;
 use App\Repository\CourrierRepository;
+use App\Repository\HistoriqueRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[
     Route('/courrier'),
-    IsGranted("ROLE_AGENT")
 ]
 class CourrierController extends AbstractController
 {
-    #[Route('/', name: 'app_courrier_index', methods: ['GET','POST'])]
+    #[Route('/', name: 'app_courrier_index', methods: ['GET', 'POST'])]
     public function index(CourrierRepository $courrierRepository, Request $request): Response
     {
         $courrier = new Courrier();
@@ -40,8 +42,30 @@ class CourrierController extends AbstractController
         ]);
     }
 
-    #[Route('/changeStatus/{id}', name: 'change_statue', methods: ['GET','POST'])]
-    public function changerStatusCourrier(Courrier $courrier,CourrierRepository $courrierRepository, Request $request): Response
+    #[Route('/historique-courrier', name: 'historique_courrier', methods: ['GET', 'POST'])]
+    public function generHistorique(HistoriqueRepository $historiqueRepository, Request $request): Response
+    {
+        $historique = new Historique();
+        $form = $this->createForm(HistoriqueType::class, $historique);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+          //  $courrier->setCreatedAt(new \DateTime());
+          //  $courrier->setStatus('en_cours');
+            $historiqueRepository->save($historique, true);
+
+            return $this->redirectToRoute('historique_courrier', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('courrier/ajouter-historique.html.twig', [
+            'historiques' => $historiqueRepository->findAll(),
+            'form'      => $form->createView()
+        ]);
+    }
+
+
+
+    #[Route('/changeStatus/{id}', name: 'change_statue', methods: ['GET', 'POST'])]
+    public function changerStatusCourrier(Courrier $courrier, CourrierRepository $courrierRepository, Request $request): Response
     {
         $form = $this->createForm(CourrierStatusType::class, $courrier);
         $form->handleRequest($request);
@@ -56,15 +80,15 @@ class CourrierController extends AbstractController
         ]);
     }
 
-  
 
- //   #[Route('/{id}', name: 'app_courrier_show', methods: ['GET'])]
- //   public function show(Courrier $courrier): Response
- //   {
- //       return $this->render('courrier/show.html.twig', [
-     //       'courrier' => $courrier,
- //       ]);
- //   }
+
+    //   #[Route('/{id}', name: 'app_courrier_show', methods: ['GET'])]
+    //   public function show(Courrier $courrier): Response
+    //   {
+    //       return $this->render('courrier/show.html.twig', [
+    //       'courrier' => $courrier,
+    //       ]);
+    //   }
 
     #[Route('/{id}/edit', name: 'app_courrier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Courrier $courrier, CourrierRepository $courrierRepository): Response
@@ -87,7 +111,7 @@ class CourrierController extends AbstractController
     #[Route('/{id}', name: 'app_courrier_delete', methods: ['GET'])]
     public function delete(Request $request, Courrier $courrier, CourrierRepository $courrierRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$courrier->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $courrier->getId(), $request->request->get('_token'))) {
             $courrierRepository->remove($courrier, true);
         }
 

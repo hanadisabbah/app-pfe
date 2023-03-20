@@ -68,9 +68,9 @@ class CourrierType extends AbstractType
                 ]
             ])
 
-            //            ->add('startingPost', null, [
-            //              'attr' => [
-            //                'class' => 'form-control'
+            // ->add('startingPost', null, [
+            //   'attr' => [
+            //   'class' => 'form-control'
             //          ]
             //    ])
             ->add('arrivalPost', null, [

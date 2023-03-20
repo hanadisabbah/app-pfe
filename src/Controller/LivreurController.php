@@ -44,14 +44,11 @@ class LivreurController extends AbstractController
             return $this->redirectToRoute('gerer_livreurs');
         }
         $livreurs = $livreurRepository->findAll();
-        return $this->render('livreur/liv.html.twig', [
+        return $this->render('livreur/index.html.twig', [
             'form' => $form->createView(),
             'livreurs'           => $livreurs
         ]);
     }
-
-
-
 
     #[Route('/ajouter-livreurs', name: 'ajouter_livreur')]
     public function ajouterLivreur(LivreurRepository $livreurRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response

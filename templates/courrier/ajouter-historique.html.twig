@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Postes{% endblock %}
+{% block title %}Liste des Historiques{% endblock %}
 
 
 {% block body %}
@@ -91,7 +91,7 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Postes
+								- Historique
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -111,64 +111,18 @@
 					<!-- Basic datatable -->
 					<div class="card">
 						<div class="card-header header-elements-inline">
-							<h5 class="card-title">Liste des postes</h5>
-							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
-								Nouvelle Poste
-							</button>
+							<h5 class="card-title">Ajouter Historique</h5>
 						</div>
 
-
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Ajouter Poste</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										{{ form_start(form) }}
-										{{ form_widget(form) }}
-										<button class="btn btn-success" type="submit">Enregisterer</button>
-										{{ form_end(form) }}
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-									</div>
-								</div>
-							</div>
+						<div class="modal-body">
+							{{ form_start(form) }}
+							{{ form_widget(form) }}
+							<button class="btn btn-success" type="submit">Enregisterer</button>
+							{{ form_end(form) }}
 						</div>
-
-						<table class="table datatable-basic">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Name</th>
-									<th>Adresse</th>
-									<th class="text-center">Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for post in posts %}
-
-
-									<tr>
-										<td>{{post.id }}</td>
-										<td>{{post.label }}</td>
-										<td>{{post.address }}</td>
-
-										<td>
-											<a href="{{ path('app_post_delete',{'id':post.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_post_edit',{'id':post.id}) }}" class="btn btn-sm btn-warning">modifier</a>
-
-										</td>
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+						</div>
 					</div>
 					<!-- /basic datatable -->
 
@@ -176,23 +130,9 @@
 				</div>
 				<!-- /content area -->
 
-			
+
 			</div>
 			<!-- /main content -->
 			<!-- /page content -->
 
 		{% endblock %}
-		{% block javascripts %}
-			<script src="{{ asset('admin-assets/js/main/jquery.min.js') }}"></script>
-			<script src="{{ asset('admin-assets/js/main/bootstrap.bundle.min.js') }}"></script>
-			<script src="{{ asset('admin-assets/js/plugins/loaders/blockui.min.js') }}"></script>
-			<!-- /core JS files -->
-
-			<!-- Theme JS files -->
-			<script src="{{ asset('admin-assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-			<script src="{{ asset('admin-assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
-			<script src="{{ asset('admin-assets/assets/js/app.js') }}"></script>
-			<script src="{{ asset('admin-assets/js/demo_pages/datatables_basic.js') }}"></script>
-		{% endblock %}
-

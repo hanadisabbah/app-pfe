@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Agent;
 use App\Entity\User;
 use App\Form\AgentType;
+use App\Form\SuperAgentType;
 use App\Repository\AgentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,6 +33,8 @@ class AgentController extends AbstractController
     #[Route('/gerer-agents', name: 'gerer_agents')]
     public function generAgents(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
     {
+        $superAgentConnecte = $this->getUser();
+        $posteConnecte = $superAgentConnecte->getPost();
         $agent = new Agent();
         $agent->setRoles(['ROLE_AGENT']);
         $form = $this->createForm(AgentType::class, $agent);
@@ -45,7 +48,13 @@ class AgentController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('gerer_agents');
         }
-        $agents = $agentRepository->findAll();
+        $agentsData = $agentRepository->findAll();
+        $agents = [];
+        foreach ($agentsData as $agent) {
+            if ($agent->getRoles()[0] == "ROLE_AGENT" && $agent->getPost() == $posteConnecte) {
+                array_push($agents, $agent);
+            }
+        }
         return $this->render('agent/index.html.twig', [
             'form' => $form->createView(),
             'agents'           => $agents
@@ -53,13 +62,44 @@ class AgentController extends AbstractController
     }
 
 
- 
+    #[Route('/gerer-super-agents', name: 'gerer_super_agents')]
+    public function generSuperAgents(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
+    {
+        $agent = new Agent();
+        $agent->setRoles(['ROLE_SUPER_AGENT']);
+        $form = $this->createForm(SuperAgentType::class, $agent);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $agent->setPassword($hasher->hashPassword(
+                $agent,
+                $agent->getPassword()
+            ));
+            $em->persist($agent);
+            $em->flush();
+            return $this->redirectToRoute('gerer_super_agents');
+        }
+        $agents = $agentRepository->findAll();
+        $superAgents = [];
+        foreach ($agents as $agent) {
+            if ($agent->getRoles()[0] == "ROLE_SUPER_AGENT") {
+                array_push($superAgents, $agent);
+            }
+        }
+        return $this->render('agent/index-sagents.html.twig', [
+            'form' => $form->createView(),
+            'agents'           => $superAgents,
+        ]);
+    }
+
 
     #[Route('/ajouter-agents', name: 'ajouter_agent')]
     public function ajouterAgent(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
     {
+        $superAgentConnecte = $this->getUser();
+        $posteConnecte = $superAgentConnecte->getPost();
         $agent = new Agent();
         $agent->setRoles(['ROLE_AGENT']);
+        $agent->setPost($posteConnecte);
         $form = $this->createForm(AgentType::class, $agent);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -76,6 +116,30 @@ class AgentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    #[Route('/ajouter-super-agents', name: 'ajouter_super_agents')]
+    public function ajouterSuperAgent(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
+    {
+        $agent = new Agent();
+        $agent->setRoles(['ROLE_SUPER_AGENT']);
+        $form = $this->createForm(SuperAgentType::class, $agent);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $agent->setPassword($hasher->hashPassword(
+                $agent,
+                $agent->getPassword()
+            ));
+            $em->persist($agent);
+            $em->flush();
+            return $this->redirectToRoute('gerer_super_agents');
+        }
+        $agents = $agentRepository->findAll();
+        return $this->render('agent/ajouter-agent.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
 
 
     #[Route('/modifier-agent/{id}', name: 'modifierAgent')]

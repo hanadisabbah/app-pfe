@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Agents
+{% block title %}Liste des Super Agents
 {% endblock %}
 
 
@@ -50,7 +50,7 @@
 										{% if app.user %}
 											{{ app.user.firstName }}
 											{{ app.user.lastName }}
-											{{ app.user.post.label }}
+											
 										{% endif %}
 									</div>
 									<div class="font-size-xs opacity-50"></div>
@@ -93,7 +93,7 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Agent
+								- Super Agents
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -113,10 +113,10 @@
 					<!-- Basic datatable -->
 					<div class="card">
 						<div class="card-header header-elements-inline">
-							<h5 class="card-title">Liste Des Agents</h5>
+							<h5 class="card-title">Liste Des Super Agents</h5>
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
-								Nouveau Agent
+								Nouveau Super Agent
 							</button>
 						</div>
 
@@ -126,7 +126,7 @@
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Ajouter Agent</h5>
+										<h5 class="modal-title" id="exampleModalLabel">Ajouter Super Agent</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -150,6 +150,7 @@
 									<th>Id</th>
 									<th>Nom</th>
 									<th>Prénom</th>
+									<th>Poste</th>
 									<th>Email</th>
 									
 
@@ -164,6 +165,7 @@
 										<td>{{agent.id }}</td>
 										<td>{{agent.firstName }}</td>
 										<td>{{agent.lastName }}</td>
+										<td>{{agent.post.label }}</td>
 										<td>{{agent.email }}</td>
 										
 

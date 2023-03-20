@@ -33,7 +33,27 @@
 
 				</ul>
 			</li>
+
+			<li class="nav-item nav-item-submenu">
+				<a href="" class="nav-link">
+					<i class="icon-copy"></i>
+					<span>Super Agent</span>
+				</a>
+
+				<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+					<li class="nav-item">
+						<a href="{{ path('ajouter_super_agents') }}" class="nav-link active">Ajoute Super Agent</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{ path('gerer_super_agents') }}" class="nav-link">Liste des Super Agent</a>
+					</li>
+
+				</ul>
+			</li>
 		{% endif %}
+
+
+
 
 
 		{% if app.user.roles[0]=="ROLE_AGENT" or app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN" %}
@@ -45,7 +65,7 @@
 
 				<ul class="nav nav-group-sub" data-submenu-title="Themes">
 					<li class="nav-item">
-						<a href="" class="nav-link active">Ajoute Poste</a>
+						<a href="{{ path('ajouter_post') }}" class="nav-link active">Ajoute Poste</a>
 					</li>
 					<li class="nav-item">
 						<a href="{{ path('app_post_index') }}" class="nav-link">Liste des Postes</a>
@@ -57,7 +77,7 @@
 		{% endif %}
 
 
-		{% if app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN" %}
+		{% if app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN"  or app.user.roles[0]=="ROLE_SUPER_AGENT" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
 					<i class="icon-copy"></i>
@@ -98,7 +118,7 @@
 		{% endif %}
 
 
-		{% if is_granted("ROLE_AGENT")  %}
+		{% if is_granted("ROLE_AGENT") or app.user.roles[0]=="ROLE_SUPER_AGENT" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
 					<i class="icon-copy"></i>
@@ -110,7 +130,7 @@
 						<a href="{{ path('app_courrier_index') }}" class="nav-link active">Ajouter Courrier</a>
 					</li>
 					<li class="nav-item">
-						<a href="" class="nav-link">Liste des Courriers</a>
+						<a href="{{ path('historique_courrier') }}" class="nav-link active">Historique</a>
 					</li>
 					<li class="nav-item">
 						<a href="" class="nav-link">gestion Agent</a>

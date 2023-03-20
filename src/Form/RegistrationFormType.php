@@ -38,19 +38,6 @@ class RegistrationFormType extends AbstractType
 
             ])
 
-
-
-            ->add('role', ChoiceType::class, [
-                'choices' => [
-                    'Super Admin' => 'Super Admin',
-                    'Admin' => 'Admin',
-                ],
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-
-
             ->add('password', PasswordType::class, [
                 'attr' => [
                     'class' => 'form-control',

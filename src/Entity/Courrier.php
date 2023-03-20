@@ -26,6 +26,9 @@ class Courrier
     #[ORM\Column(length: 255)]
     private ?string $postalSituation = null;
 
+    //#[ORM\Column(length: 255)]
+    //private ?string $deliveryMan = null;
+
     #[ORM\Column(length: 255)]
     private ?string $deliverySituation = null;
 
@@ -43,9 +46,16 @@ class Courrier
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $arrivalPost = null;
 
+    //#[ORM\ManyToOne(inversedBy: 'courriers')]
+   // #[ORM\JoinColumn(nullable: false)]
+   // private ?Post $postalSituation = null;
+
     #[ORM\ManyToOne(inversedBy: 'courriers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Livreur $deliveryMan = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
     public function getId(): ?int
     {
@@ -168,6 +178,18 @@ class Courrier
     public function setDeliveryMan(?User $deliveryMan): self
     {
         $this->deliveryMan = $deliveryMan;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

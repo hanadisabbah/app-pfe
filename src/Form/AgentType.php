@@ -38,21 +38,13 @@ class AgentType extends AbstractType
 
             ])
 
-            ->add('post', null, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+        //    ->add('post', null, [
+        //        'attr' => [
+        //            'class' => 'form-control'
+       //         ]
+        //    ])
 
-            ->add('role', ChoiceType::class, [
-                'choices' => [
-                    'Super Agent' => 'Super Agent',
-                    'Agent' => 'Agent',
-                ],
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+           
 
             ->add('password', PasswordType::class, [
                 'attr' => [
