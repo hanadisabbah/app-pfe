@@ -168,43 +168,43 @@
 										<td>
 
 											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{admin.id}}">
-  supprimer
-</button>
+												supprimer
+											</button>
 
 
 										</td>
 
 
 										<td>
-											<a href="{{ path('modifierAdmin',{'id':admin.id}) }}" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o mr-2"></i></a>
+											<a href="{{ path('modifierAdmin',{'id':admin.id}) }}" class="btn btn-sm btn-warning">
+												<i class="fa fa-pencil-square-o mr-2"></i>
+											</a>
 										</td>
 									</tr>
 									<!-- Button trigger modal -->
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter{{admin.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-top" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-danger">
-        <h5 class="modal-title" id="exampleModalLongTitle">Confirmation de la suppression</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      Etes vous sure de le supprimer
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-        {% if app.user.id != admin.id %}
+									<!-- Modal -->
+									<div class="modal fade" id="exampleModalCenter{{admin.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-top" role="document">
+											<div class="modal-content">
+												<div class="modal-header bg-danger">
+													<h5 class="modal-title" id="exampleModalLongTitle">Confirmation de la suppression</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													Etes vous sure de le supprimer
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+													{% if app.user.id != admin.id %}
 														<a href="{{ path('supprimer_admin',{'id':admin.id}) }}" class="btn bg-danger">Confirmer</a>
 													{% endif %}
-      </div>
-    </div>
-  </div>
-</div>
-
-								
+												</div>
+											</div>
+										</div>
+									</div>
 
 
 								{% endfor %}

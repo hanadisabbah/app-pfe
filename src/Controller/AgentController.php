@@ -34,6 +34,7 @@ class AgentController extends AbstractController
     public function generAgents(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
     {
         $superAgentConnecte = $this->getUser();
+        if($superAgentConnecte instanceof Agent)
         $posteConnecte = $superAgentConnecte->getPost();
         $agent = new Agent();
         $agent->setRoles(['ROLE_AGENT']);

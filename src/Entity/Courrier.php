@@ -23,8 +23,7 @@ class Courrier
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $deliveryDate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $postalSituation = null;
+   
 
     //#[ORM\Column(length: 255)]
     //private ?string $deliveryMan = null;
@@ -46,16 +45,19 @@ class Courrier
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $arrivalPost = null;
 
-    //#[ORM\ManyToOne(inversedBy: 'courriers')]
-   // #[ORM\JoinColumn(nullable: false)]
-   // private ?Post $postalSituation = null;
+   
+   #[ORM\ManyToOne(inversedBy: 'courriers')]
+   #[ORM\JoinColumn(nullable: false)]
+   private ?Livreur $deliveryMan = null;
 
-    #[ORM\ManyToOne(inversedBy: 'courriers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Livreur $deliveryMan = null;
+   #[ORM\Column(length: 255)]
+   private ?string $postalSituation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+   //#[ORM\Column(length: 255)]
+  // private ?string $type = null;
+
+   // #[ORM\Column(length: 255)]
+   // private ?string $type = null;
 
     public function getId(): ?int
     {
@@ -98,17 +100,7 @@ class Courrier
         return $this;
     }
 
-    public function getPostalSituation(): ?string
-    {
-        return $this->postalSituation;
-    }
-
-    public function setPostalSituation(string $postalSituation): self
-    {
-        $this->postalSituation = $postalSituation;
-
-        return $this;
-    }
+ 
 
     public function getDeliverySituation(): ?string
     {
@@ -182,15 +174,39 @@ class Courrier
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
+ //   public function getType(): ?string
+ //   {
+ //       return $this->type;
+ //   }
 
-    public function setType(string $type): self
-    {
-        $this->type = $type;
+ //   public function setType(string $type): self
+//    {
+ //       $this->type = $type;
 
-        return $this;
-    }
+ //       return $this;
+//    }
+
+public function getPostalSituation(): ?string
+{
+    return $this->postalSituation;
+}
+
+public function setPostalSituation(string $postalSituation): self
+{
+    $this->postalSituation = $postalSituation;
+
+    return $this;
+}
+
+//public function getType(): ?string
+//{
+//    return $this->type;
+//}
+
+//public function setType(string $type): self
+//{
+  //  $this->type = $type;
+
+    //return $this;
+//}
 }

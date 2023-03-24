@@ -97,6 +97,7 @@ class LivreurController extends AbstractController
     {
         $em->remove($livreur);
         $em->flush();
+        //$this->addFlash('success', 'Courier Removed! ');
         return $this->redirectToRoute('gerer_livreurs');
     }
 }

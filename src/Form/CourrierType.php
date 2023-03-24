@@ -52,6 +52,12 @@ class CourrierType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+
+            ->add('arrivalPost', null, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('postalSituation', null, [
                 'attr' => [
                     'class' => 'form-control'
@@ -73,11 +79,7 @@ class CourrierType extends AbstractType
             //   'class' => 'form-control'
             //          ]
             //    ])
-            ->add('arrivalPost', null, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+            
             ->add('deliveryMan', EntityType::class, [
                 'class' => Livreur::class,
                 'attr' => [

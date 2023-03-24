@@ -40,14 +40,14 @@ class LivreurType extends AbstractType
             ])
 
 
-            ->add('role', ChoiceType::class, [
-                'choices' => [
-                    'Livreur'   => 'Livreur'
-                ],
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+       //     ->add('role', ChoiceType::class, [
+        //        'choices' => [
+        //            'Livreur'   => 'Livreur'
+        //        ],
+        //        'attr' => [
+         //           'class' => 'form-control'
+        //        ]
+        //    ])
 
             ->add('password',PasswordType::class,[
                 'attr'=>[

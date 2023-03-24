@@ -167,38 +167,37 @@
 
 										<td>
 
-											<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal_theme_danger"><i class="fa fa-trash-o" aria-hidden="true"></i>
+											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{livreur.id}}">
+												supprimer
+											</button>
 
-											</buttton>
 
 										</td>
 
 
 										<td>
-											<a href="{{ path('modifierLivreur',{'id':livreur.id}) }}" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o mr-2"></i></a>
+											<a href="{{ path('modifierLivreur',{'id':livreur.id}) }}" class="btn btn-sm btn-warning">
+												<i class="fa fa-pencil-square-o mr-2"></i>
+											</a>
 										</td>
 									</tr>
 
 
-									<!-- Danger modal -->
-									<div id="modal_theme_danger" class="modal fade" tabindex="-1">
-										<div class="modal-dialog">
+						<!-- Modal -->
+									<div class="modal fade" id="exampleModalCenter{{livreur.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-top" role="document">
 											<div class="modal-content">
 												<div class="modal-header bg-danger">
-													<h6 class="modal-title">Confirmation</h6>
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h5 class="modal-title" id="exampleModalLongTitle">Confirmation de la suppression</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
 												</div>
-
 												<div class="modal-body">
-													<p>Etes vous sur de le supprimer
-
-													</p>
-
-
+													Etes vous sure de le supprimer
 												</div>
-
 												<div class="modal-footer">
-													<button type="button" class="btn btn-link" data-dismiss="modal">Annuler</button>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 													{% if app.user.id != livreur.id %}
 														<a href="{{ path('supprimer_livreur',{'id':livreur.id}) }}" class="btn bg-danger">Confirmer</a>
 													{% endif %}

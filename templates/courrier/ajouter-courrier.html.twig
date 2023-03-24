@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Des Courriers
-{% endblock %}
+{% block title %}Liste Des Courriers{% endblock %}
 
 
 {% block body %}
@@ -142,14 +141,16 @@
 								</div>
 							</div>
 						</div>
-
+					
 
 						<table class="table datatable-basic">
 							<thead>
 								<tr>
 									<th>Id</th>
-									<th>Poste de départ</th>
-									<th>Poste d'arrivé</th>
+									<th>Poste de départ
+									</th>
+									<th>Poste d'arrivé
+									</th>
 									<th>Livreur</th>
 									<th>Statut</th>
 									<th class="text-center">Actions</th>
@@ -167,17 +168,17 @@
 										<td>{{courrier.deliveryMan.lastName }}</td>
 										<td>
 											{% if courrier.status == 'arrive'  %}
-												<span class="badge badge-primary">Livré</span>
+												<span class="badge badge-success">Livré</span>
 											{% elseif courrier.status == 'en_cours' %}
 												<span class="badge badge-warning">En Cours</span>
 											{% else %}
-												<span class="badge badge-info">En Stock</span>
+											<span class="badge badge-info">En Stock</span>
 											{% endif %}
 										</td>
 
 										<td>
-											<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+											{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>#}
+											{#<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
 											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
 										</td>
 
@@ -192,7 +193,7 @@
 				</div>
 				<!-- /content area -->
 
-
+		
 			</div>
 			<!-- /main content -->
 			<!-- /page content -->

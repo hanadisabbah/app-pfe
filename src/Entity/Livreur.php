@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Livreur extends User
 {
 
-  #[ORM\Column(length: 255)]
-  private ?string $role = null;
+ // #[ORM\Column(length: 255)]
+ // private ?string $role = null;
  //   #[ORM\Id]
  //   #[ORM\GeneratedValue]
 //    #[ORM\Column]

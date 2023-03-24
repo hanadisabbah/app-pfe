@@ -11,6 +11,7 @@ use App\Repository\CourrierRepository;
 use App\Repository\HistoriqueRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,6 +39,51 @@ class CourrierController extends AbstractController
         }
         return $this->render('courrier/index.html.twig', [
             'courriers' => $courrierRepository->findAll(),
+            'form'      => $form->createView()
+        ]);
+    }
+
+    #[Route('/ajouter-courrier', name: 'ajouter_courrier', methods: ['GET', 'POST'])]
+    public function ajouterCourrier(CourrierRepository $courrierRepository, Request $request): Response
+    {
+        
+        $courrier = new Courrier();
+        $form = $this->createForm(CourrierType::class, $courrier);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $courrier->setDeliveryDate(new \Datetime());
+            $courrier->setCreatedAt(new \DateTime());
+            $courrier->setStatus('en_cours');
+            $courrierRepository->save($courrier, true);
+
+            return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('courrier/ajouter-courrier.html.twig', [ 
+            'courriers' => $courrierRepository->findAll(),
+            'form'      => $form->createView()
+        ]);
+    }
+
+    #[Route('/valider', name: 'valider', methods: ['GET', 'POST'])]
+    public function valider(CourrierRepository $courrierRepository, Request $request): Response
+    {
+        $form = $this->createFormBuilder()->
+        add('ref',TextType::class, ['attr' => ['class' => 'form-control' ]])->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ref = $form->get('ref')->getData();
+            $courrierExiste = $courrierRepository->findOneBy(['barcode' => $ref]);
+            if($courrierExiste) {
+                
+                return $this->redirectToRoute('valider', ['isExiste' => true,'id' => $courrierExiste->getId()], Response::HTTP_SEE_OTHER);
+            }else{
+
+                return $this->redirectToRoute('valider', ['isExiste' => false, 'id' => false], Response::HTTP_SEE_OTHER);
+            }
+        }
+        return $this->render('courrier/valider.html.twig', [
             'form'      => $form->createView()
         ]);
     }
@@ -117,4 +163,6 @@ class CourrierController extends AbstractController
 
         return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
