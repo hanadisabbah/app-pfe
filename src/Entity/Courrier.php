@@ -53,11 +53,10 @@ class Courrier
    #[ORM\Column(length: 255)]
    private ?string $postalSituation = null;
 
-   //#[ORM\Column(length: 255)]
-  // private ?string $type = null;
+   #[ORM\Column(length: 255)]
+   private ?string $typecourrier = null;
 
-   // #[ORM\Column(length: 255)]
-   // private ?string $type = null;
+ 
 
     public function getId(): ?int
     {
@@ -174,17 +173,7 @@ class Courrier
         return $this;
     }
 
- //   public function getType(): ?string
- //   {
- //       return $this->type;
- //   }
 
- //   public function setType(string $type): self
-//    {
- //       $this->type = $type;
-
- //       return $this;
-//    }
 
 public function getPostalSituation(): ?string
 {
@@ -198,15 +187,17 @@ public function setPostalSituation(string $postalSituation): self
     return $this;
 }
 
-//public function getType(): ?string
-//{
-//    return $this->type;
-//}
 
-//public function setType(string $type): self
-//{
-  //  $this->type = $type;
 
-    //return $this;
-//}
+public function getTypecourrier(): ?string
+{
+    return $this->typecourrier;
+}
+
+public function setTypecourrier(string $typecourrier): self
+{
+    $this->typecourrier = $typecourrier;
+
+    return $this;
+}
 }

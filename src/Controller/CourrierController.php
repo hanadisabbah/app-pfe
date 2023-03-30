@@ -30,15 +30,17 @@ class CourrierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $courrier->setDeliveryDate(new \Datetime());
+           // $courrier->setDeliveryDate(new \Datetime());
             $courrier->setCreatedAt(new \DateTime());
-            $courrier->setStatus('en_cours');
+            $courrier->setStatus('en_stock');
             $courrierRepository->save($courrier, true);
 
             return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('courrier/index.html.twig', [
-            'courriers' => $courrierRepository->findAll(),
+            'courriersLivre'   => $courrierRepository->findBy(['status' => 'livré']),
+            'courriersEnStock' => $courrierRepository->findBy(['status' => 'en_stock']),
+            'courriersEnCours' => $courrierRepository->findBy(['status' => 'en_cours']),
             'form'      => $form->createView()
         ]);
     }
@@ -48,6 +50,7 @@ class CourrierController extends AbstractController
     {
         
         $courrier = new Courrier();
+       // $courrier->setArrivalPost($Post);
         $form = $this->createForm(CourrierType::class, $courrier);
         $form->handleRequest($request);
 
@@ -55,12 +58,17 @@ class CourrierController extends AbstractController
             $courrier->setDeliveryDate(new \Datetime());
             $courrier->setCreatedAt(new \DateTime());
             $courrier->setStatus('en_cours');
+          //  $StartingPostConnecte = $this->getUser();
+           // $courrier->setStartingPost('getUser');
             $courrierRepository->save($courrier, true);
 
             return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('courrier/ajouter-courrier.html.twig', [ 
-            'courriers' => $courrierRepository->findAll(),
+            'courriersLivre'   => $courrierRepository->findBy(['status' => 'livré']),
+            'courriersEnStock' => $courrierRepository->findBy(['status' => 'en_stock']),
+            'courriersEnCours' => $courrierRepository->findBy(['status' => 'en_cours']),
+           // 'courriers' => $courrierRepository->findAll(),
             'form'      => $form->createView()
         ]);
     }
@@ -117,6 +125,7 @@ class CourrierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+           //dd($courrier);
             $courrierRepository->save($courrier, true);
 
             return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
@@ -157,12 +166,14 @@ class CourrierController extends AbstractController
     #[Route('/{id}', name: 'app_courrier_delete', methods: ['GET'])]
     public function delete(Request $request, Courrier $courrier, CourrierRepository $courrierRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $courrier->getId(), $request->request->get('_token'))) {
-            $courrierRepository->remove($courrier, true);
-        }
+        $courrierRepository->remove($courrier, true);
+      
 
         return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
     }
+
+   
+    
 
     
 }

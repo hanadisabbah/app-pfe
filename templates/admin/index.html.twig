@@ -115,7 +115,7 @@
 							<h5 class="card-title">Liste Des Administrateurs</h5>
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
-								Nouveau Administrateur
+								+Nouveau Administrateur
 							</button>
 						</div>
 
@@ -168,8 +168,10 @@
 										<td>
 
 											<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{admin.id}}">
-												supprimer
+												 <i class="fa fa-trash-o" aria-hidden="true"></i>
+												
 											</button>
+		
 
 
 										</td>
@@ -200,6 +202,7 @@
 													<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 													{% if app.user.id != admin.id %}
 														<a href="{{ path('supprimer_admin',{'id':admin.id}) }}" class="btn bg-danger">Confirmer</a>
+
 													{% endif %}
 												</div>
 											</div>

@@ -15,7 +15,7 @@ class CourrierStatusType extends AbstractType
         $builder
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'En Stock' => 'en_stock',
+                    //'En Stock' => 'en_stock',
                     'En Cours' => 'en_cours',
                     'Livré'   => 'livré'
                 ],

@@ -9,17 +9,17 @@
 		</li>
 		<li class="nav-item">
 			<a href="{{ path('app_dashboard') }}" class="nav-link active">
-				<i class="icon-home4"></i>
+				<i class="icon-pie-chart5"></i>
 				<span>
 					Dashboard
 				</span>
 			</a>
 		</li>
 
-		{% if app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN" %}
+		{% if app.user.roles[0]=="SUPER_ADMIN" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-copy"></i>
+					<i class="icon-user"></i>
 					<span>Admin</span>
 				</a>
 
@@ -33,10 +33,11 @@
 
 				</ul>
 			</li>
-
+			{% endif %}
+            {% if app.user.roles[0]=="SUPER_ADMIN" or app.user.roles[0]=="ROLE_ADMIN" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-copy"></i>
+					<i class="icon-user"></i>
 					<span>Super Agent</span>
 				</a>
 
@@ -56,15 +57,16 @@
 
 
 
-		{% if app.user.roles[0]=="ROLE_SUPER_AGENT" or app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN" %}
+		{% if app.user.roles[0]=="ROLE_SUPER_AGENT" or app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN"  %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-color-sampler"></i>
+					<i class="icon-office"></i>
 					<span>Poste</span>
 				</a>
 
 				<ul class="nav nav-group-sub" data-submenu-title="Themes">
 					<li class="nav-item">
+					
 						<a href="{{ path('ajouter_post') }}" class="nav-link active">Ajoute Poste</a>
 					</li>
 					<li class="nav-item">
@@ -77,15 +79,16 @@
 		{% endif %}
 
 
-		{% if app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN"  or app.user.roles[0]=="ROLE_SUPER_AGENT" %}
+		{% if  app.user.roles[0]=="ROLE_SUPER_AGENT" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-copy"></i>
-					<span>Agents</span>
+					<i class="icon-user"></i>
+					<span>Agent</span>
 				</a>
 
 				<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 					<li class="nav-item">
+					
 						<a href="{{ path('ajouter_agent') }}" class="nav-link active">Ajoute Agent</a>
 					</li>
 					<li class="nav-item">
@@ -101,7 +104,7 @@
 		{% if app.user.roles[0]=="ROLE_ADMIN" or app.user.roles[0]=="SUPER_ADMIN" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-copy"></i>
+					<i class="icon-truck"></i>
 					<span>Livreur</span>
 				</a>
 
@@ -121,7 +124,7 @@
 		{% if is_granted("ROLE_AGENT") or app.user.roles[0]=="ROLE_SUPER_AGENT" %}
 			<li class="nav-item nav-item-submenu">
 				<a href="" class="nav-link">
-					<i class="icon-copy"></i>
+					<i class="icon-envelop4"></i>
 					<span>Courrier</span>
 				</a>
 
@@ -133,7 +136,7 @@
 						<a href="{{ path('valider') }}" class="nav-link active">Valider un courrier</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{ path('historique_courrier') }}" class="nav-link active">Historique</a>
+						<a href="{{ path('historique_courrier') }}" class="nav-link active"></a>
 					</li>
 					
 				{% endif %}

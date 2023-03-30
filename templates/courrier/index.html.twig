@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Des Courriers
-{% endblock %}
+{% block title %}Liste Des Courriers{% endblock %}
 
 
 {% block body %}
@@ -115,7 +114,7 @@
 							<h5 class="card-title">Liste Des Courriers</h5>
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
-								Nouveau Courrier
+								+Nouveau Courrier
 							</button>
 						</div>
 
@@ -125,7 +124,7 @@
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Ajouter Poste</h5>
+										<h5 class="modal-title" id="exampleModalLabel">Ajouter Courrier</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -148,6 +147,7 @@
 							<thead>
 								<tr>
 									<th>Id</th>
+									<th>Barcode</th>
 									<th>Poste de départ</th>
 									<th>Poste d'arrivé</th>
 									<th>Livreur</th>
@@ -156,20 +156,112 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for courrier in courriers %}
+								{% for courrier in courriersLivre %}
 
 
 									<tr>
 										<td>{{courrier.id }}</td>
+										<td>{{courrier.barcode }}</td>
 										<td>{{courrier.startingPost.label }}</td>
 										<td>{{courrier.arrivalPost.label }}</td>
 										<td>{{courrier.deliveryMan.firstName }}</td>
 										<td>{{courrier.deliveryMan.lastName }}</td>
 										<td>
-											{% if courrier.status == 'arrive'  %}
-												<span class="badge badge-primary">Livré</span>
+											{% if courrier.status == 'livré'  %}
+												<span class="badge badge-success">Livré</span>
 											{% elseif courrier.status == 'en_cours' %}
-												<span class="badge badge-warning">En Cours</span>
+												<span class="badge badge-warning badge">En Cours</span>
+											{% else %}
+												<span class="badge badge-info">En Stock</span>
+											{% endif %}
+										</td>
+
+										<td>
+											<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
+										</td>
+
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						<hr>
+						<h4 class="bg-secondary">Liste Des courriers En Stock</h4>
+						<table class="table datatable-basic">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Barcode</th>
+									<th>Poste de départ</th>
+									<th>Poste d'arrivé</th>
+									<th>Livreur</th>
+									<th>Statut</th>
+									<th class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for courrier in courriersEnStock %}
+
+
+									<tr>
+										<td>{{courrier.id }}</td>
+										<td>{{courrier.barcode }}</td>
+										<td>{{courrier.startingPost.label }}</td>
+										<td>{{courrier.arrivalPost.label }}</td>
+										<td>{{courrier.deliveryMan.firstName }}</td>
+										<td>{{courrier.deliveryMan.lastName }}</td>
+										<td>
+											{% if courrier.status == 'livré'  %}
+												<span class="badge badge-success">Livré</span>
+											{% elseif courrier.status == 'en_cours' %}
+												<span class="badge badge-warning badge">En Cours</span>
+											{% else %}
+												<span class="badge badge-info">En Stock</span>
+											{% endif %}
+										</td>
+
+										<td>
+											<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
+										</td>
+
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+
+						<hr>
+						<h4 class="bg-secondary">Liste Des courriers En Cours</h4>
+						<table class="table datatable-basic">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Barcode</th>
+									<th>Poste de départ</th>
+									<th>Poste d'arrivé</th>
+									<th>Livreur</th>
+									<th>Statut</th>
+									<th class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for courrier in courriersEnCours %}
+
+
+									<tr>
+										<td>{{courrier.id }}</td>
+										<td>{{courrier.barcode }}</td>
+										<td>{{courrier.startingPost.label }}</td>
+										<td>{{courrier.arrivalPost.label }}</td>
+										<td>{{courrier.deliveryMan.firstName }}</td>
+										<td>{{courrier.deliveryMan.lastName }}</td>
+										<td>
+											{% if courrier.status == 'livré'  %}
+												<span class="badge badge-success">Livré</span>
+											{% elseif courrier.status == 'en_cours' %}
+												<span class="badge badge-warning badge">En Cours</span>
 											{% else %}
 												<span class="badge badge-info">En Stock</span>
 											{% endif %}
@@ -197,4 +289,17 @@
 			<!-- /main content -->
 			<!-- /page content -->
 
+		{% endblock %}
+		{% block javascripts %}
+			<script src="{{ asset('admin-assets/js/main/jquery.min.js') }}"></script>
+			<script src="{{ asset('admin-assets/js/main/bootstrap.bundle.min.js') }}"></script>
+			<script src="{{ asset('admin-assets/js/plugins/loaders/blockui.min.js') }}"></script>
+			<!-- /core JS files -->
+
+			<!-- Theme JS files -->
+			<script src="{{ asset('admin-assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+			<script src="{{ asset('admin-assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+			<script src="{{ asset('admin-assets/assets/js/app.js') }}"></script>
+			<script src="{{ asset('admin-assets/js/demo_pages/datatables_basic.js') }}"></script>
 		{% endblock %}

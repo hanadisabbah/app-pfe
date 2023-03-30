@@ -25,6 +25,18 @@ class CourrierType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            
+            ->add('typeCourrier', ChoiceType::class, [
+                'label' => 'Choisir le type de courrier',
+                'choices' => [
+                    'Simple' => 'Simple',
+                    'Grande' => 'Grande',
+                    'Multiple' => 'Multiple'
+                ]
+                ,  'attr'  => [
+                    'class' => 'form-control'
+                ]
+            ])
             /*->add('status', ChoiceType::class, [
                 'choices' => [
                     'En Cours' => 'onloading',
@@ -41,12 +53,12 @@ class CourrierType extends AbstractType
             //       'class' => 'form-control'
             // ]
             //  ])
-           /* ->add('deliveryDate', DateType::class,  [
+            ->add('deliveryDate', DateType::class,  [
                 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])*/
+            ])
             ->add('startingPost', null, [
                 'attr' => [
                     'class' => 'form-control'
@@ -73,6 +85,7 @@ class CourrierType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+
 
             // ->add('startingPost', null, [
             //   'attr' => [
