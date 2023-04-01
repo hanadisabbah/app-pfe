@@ -121,12 +121,6 @@
 							{{form_end(form)}}
 						</div>
 
-                        {% if app.request.get('isExiste') and app.request.get('id') != null  %}
-                            <div class="alert alert-info">Le courrier est exite déjà vous pouvez changer son status <a href="{{ path('change_statue',{'id':app.request.get('id')}) }}">changer status</a></div>
-                        {% else %}
-                         <div class="alert alert-warning">Le courrier n'est exite pas ajouter un courrier par ici  <a href="{{ path('ajouter_courrier') }}">ajouter courrier</a></div>
-                        
-                        {% endif %}
 					</div>
 					<!-- /basic datatable -->
 

@@ -82,7 +82,7 @@ class AgentController extends AbstractController
         $agents = $agentRepository->findAll();
         $superAgents = [];
         foreach ($agents as $agent) {
-            if ($agent->getRoles()[0] == "ROLE_SUPER_AGENT") {
+            if ($agent->getRoles()[0] == "ROLE_SUPER_AGENT" || $agent->getRoles()[0] == "ROLE_AGENT") {
                 array_push($superAgents, $agent);
             }
         }
@@ -97,9 +97,11 @@ class AgentController extends AbstractController
     public function ajouterAgent(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
     {
         $superAgentConnecte = $this->getUser();
+        if($superAgentConnecte instanceof Agent)
         $posteConnecte = $superAgentConnecte->getPost();
         $agent = new Agent();
         $agent->setRoles(['ROLE_AGENT']);
+        // affecter l'agent avec la poste de super agent connecté
         $agent->setPost($posteConnecte);
         $form = $this->createForm(AgentType::class, $agent);
         $form->handleRequest($request);
@@ -123,7 +125,7 @@ class AgentController extends AbstractController
     public function ajouterSuperAgent(AgentRepository $agentRepository, UserPasswordHasherInterface $hasher, Request $request, EntityManagerInterface $em): Response
     {
         $agent = new Agent();
-        $agent->setRoles(['ROLE_SUPER_AGENT']);
+        //$agent->setRoles(['ROLE_SUPER_AGENT']);
         $form = $this->createForm(SuperAgentType::class, $agent);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -131,6 +133,9 @@ class AgentController extends AbstractController
                 $agent,
                 $agent->getPassword()
             ));
+            $roles =[];
+            array_push($roles,$form->get('role')->getData());
+            $agent->setRoles($roles);
             $em->persist($agent);
             $em->flush();
             return $this->redirectToRoute('gerer_super_agents');

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Des Courriers
-{% endblock %}
+{% block title %}Liste Des Courriers{% endblock %}
 
 
 {% block body %}
@@ -92,7 +91,7 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Courriers
+								- Courrier
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -111,30 +110,25 @@
 					class="content">
 					<!-- Basic datatable -->
 					<div class="card">
-						<div class="card-header header-elements-inline">
-							<h5 class="card-title">Modifier Status Courrier</h5>
+						<div class="card-header header-elements-inline  text-center bg-info text-white">
+							<h5 class="card-title">Message !</h5>
+
 						</div>
-
-
-						<!-- Modal -->
-
 						<div class="card-body">
-							{{ form_start(form) }}
-							{{ form_widget(form) }}
-							<button class="btn btn-success" type="submit">Mise à jour</button>
-							{{ form_end(form) }}
+                          <p>Type Courrier: {{ courrier.typeCourrier }}</p>
+                          <p>Poste de départ: {{ courrier.startingPost.label }}</p>
+                          <p>Poste d'arrivé: {{ courrier.arrivalPost.label }}</p>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <div class="card-footer">
+                          Le courrier a été modifie avec succees
 						</div>
+
 					</div>
 					<!-- /basic datatable -->
 
 
 				</div>
 				<!-- /content area -->
-
-
 			</div>
 			<!-- /main content -->
 			<!-- /page content -->

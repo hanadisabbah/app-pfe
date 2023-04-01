@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Agent;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,17 @@ class SuperAgentType extends AbstractType
 
         ])
         ->add('last_name', TextType::class, [
+            'attr' => [
+                'class' => 'form-control'
+            ]
+
+        ])
+        ->add('role', ChoiceType::class, [
+            'choices' => [
+                'AGENT' => "ROLE_AGENT",
+                'SUPER AGENT' => "ROLE_SUPER_AGENT"
+            ],
+
             'attr' => [
                 'class' => 'form-control'
             ]

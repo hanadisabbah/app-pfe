@@ -59,22 +59,22 @@ class CourrierType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('startingPost', null, [
+            /*->add('startingPost', null, [
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
+            ])*/
 
             ->add('arrivalPost', null, [
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('postalSituation', null, [
+            /*->add('postalSituation', null, [
                 'attr' => [
                     'class' => 'form-control'
                 ]
-            ])
+            ])*/
             ->add('deliverySituation', null, [
                 'attr' => [
                     'class' => 'form-control'

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Des Courriers
-{% endblock %}
+{% block title %}Ajouter Courrier{% endblock %}
 
 
 {% block body %}
@@ -50,6 +49,7 @@
 										{% if app.user %}
 											{{ app.user.firstName }}
 											{{ app.user.lastName }}
+											
 										{% endif %}
 									</div>
 									<div class="font-size-xs opacity-50"></div>
@@ -92,7 +92,7 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Courriers
+								- Courrier
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -112,175 +112,18 @@
 					<!-- Basic datatable -->
 					<div class="card">
 						<div class="card-header header-elements-inline">
-							<h5 class="card-title">Liste Des Courriers</h5>
-							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary float-end" data-toggle="modal" data-target="#exampleModal">
-								Nouveau Courrier
-							</button>
+							<h5 class="card-title">Ajouter Courrier</h5>
 						</div>
 
-
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Ajouter Courrier</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										{{ form_start(form) }}
-										{{ form_widget(form) }}
-										<button class="btn btn-success" type="submit">Enregisterer</button>
-										{{ form_end(form) }}
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-									</div>
-								</div>
-							</div>
+						<div class="modal-body">
+							{{ form_start(form) }}
+							{{ form_widget(form) }}
+							<button class="btn btn-success" type="submit">Enregisterer</button>
+							{{ form_end(form) }}
 						</div>
-
-
-						<table class="table datatable-basic">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Barcode</th>
-									<th>Poste de départ</th>
-									<th>Poste d'arrivé</th>
-									<th>Livreur</th>
-									<th>Statut</th>
-									<th class="text-center">Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for courrier in courriersLivre %}
-
-
-									<tr>
-										<td>{{courrier.id }}</td>
-										<td>{{courrier.barcode }}</td>
-										<td>{{courrier.startingPost.label }}</td>
-										<td>{{courrier.arrivalPost.label }}</td>
-										<td>{{courrier.deliveryMan.firstName }}</td>
-										<td>{{courrier.deliveryMan.lastName }}</td>
-										<td>
-											{% if courrier.status == 'livré'  %}
-												<span class="badge badge-success">Livré</span>
-											{% elseif courrier.status == 'en_cours' %}
-												<span class="badge badge-warning">En Cours</span>
-											{% else %}
-												<span class="badge badge-info">En Stock</span>
-											{% endif %}
-										</td>
-
-										<td>{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>#}
-											{#<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
-											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
-										</td>
-
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-
-
-						<hr>
-						<h4 class="bg-secondary">Liste Des courriers En Stock</h4>
-						<table class="table datatable-basic">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Barcode</th>
-									<th>Poste de départ</th>
-									<th>Poste d'arrivé</th>
-									<th>Livreur</th>
-									<th>Statut</th>
-									<th class="text-center">Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for courrier in courriersEnStock %}
-
-
-									<tr>
-										<td>{{courrier.id }}</td>
-										<td>{{courrier.barcode }}</td>
-										<td>{{courrier.startingPost.label }}</td>
-										<td>{{courrier.arrivalPost.label }}</td>
-										<td>{{courrier.deliveryMan.firstName }}</td>
-										<td>{{courrier.deliveryMan.lastName }}</td>
-										<td>
-											{% if courrier.status == 'livré'  %}
-												<span class="badge badge-success">Livré</span>
-											{% elseif courrier.status == 'en_cours' %}
-												<span class="badge badge-warning badge">En Cours</span>
-											{% else %}
-												<span class="badge badge-info">En Stock</span>
-											{% endif %}
-										</td>
-
-										<td>
-											{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
-											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
-										</td>
-
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-
-
-						<hr>
-						<h4 class="bg-secondary">Liste Des courriers En Cours</h4>
-						<table class="table datatable-basic">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Barcode</th>
-									<th>Poste de départ</th>
-									<th>Poste d'arrivé</th>
-									<th>Livreur</th>
-									<th>Statut</th>
-									<th class="text-center">Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for courrier in courriersEnCours %}
-
-
-									<tr>
-										<td>{{courrier.id }}</td>
-										<td>{{courrier.barcode }}</td>
-										<td>{{courrier.startingPost.label }}</td>
-										<td>{{courrier.arrivalPost.label }}</td>
-										<td>{{courrier.deliveryMan.firstName }}</td>
-										<td>{{courrier.deliveryMan.lastName }}</td>
-										<td>
-											{% if courrier.status == 'livré'  %}
-												<span class="badge badge-success">Livré</span>
-											{% elseif courrier.status == 'en_cours' %}
-												<span class="badge badge-warning badge">En Cours</span>
-											{% else %}
-												<span class="badge badge-info">En Stock</span>
-											{% endif %}
-										</td>
-
-										<td>
-											{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
-											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
-										</td>
-
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+						</div>
 					</div>
 					<!-- /basic datatable -->
 

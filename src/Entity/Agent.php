@@ -11,7 +11,17 @@ class Agent extends User
 
   #[ORM\ManyToOne(inversedBy: 'agent')]
   private ?Post $post = null;
+  private $role;
+  public function setRole(string $role): ?string
+    {
+        return $this->role = $role;
+   }
 
+
+   public function getRole(): ?string
+     {
+       return $this->role;
+     }
   //// #[ORM\ManyToOne(inversedBy: 'agent')]
   //     private ?Post $post = null;
 
