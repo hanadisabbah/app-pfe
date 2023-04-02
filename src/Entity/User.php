@@ -44,6 +44,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Historique::class)]
+    private Collection $historiques;
+
+    public function __construct()
+    {
+        $this->historiques = new ArrayCollection();
+    }
+
    
 
 
@@ -167,6 +175,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
+     * @return Collection<int, Historique>
+     */
+    public function getHistoriques(): Collection
+    {
+        return $this->historiques;
+    }
+
+    public function addHistorique(Historique $historique): self
+    {
+        if (!$this->historiques->contains($historique)) {
+            $this->historiques->add($historique);
+            $historique->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): self
+    {
+        if ($this->historiques->removeElement($historique)) {
+            // set the owning side to null (unless already changed)
+            if ($historique->getUtilisateur() === $this) {
+                $historique->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 
 

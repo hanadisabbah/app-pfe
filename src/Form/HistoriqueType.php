@@ -17,7 +17,7 @@ class HistoriqueType extends AbstractType
             ->add('statut', ChoiceType::class, [
                 'choices' => [
                     'En Stock' => 'en_stock',
-            'En Cours' => 'en_cours',
+                    'En Cours' => 'en_cours',
                     'Livré'   => 'livré'
                 ],
                 'attr' => [ 'class' => 'form-control mb-2'

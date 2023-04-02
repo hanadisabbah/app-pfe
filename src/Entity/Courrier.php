@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CourrierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,6 +57,17 @@ class Courrier
 
    #[ORM\Column(length: 255)]
    private ?string $typecourrier = null;
+
+   #[ORM\OneToMany(mappedBy: 'courrier', targetEntity: Historique::class)]
+   private Collection $historiques;
+
+   #[ORM\Column]
+   private ?bool $isDeleted = null;
+
+   public function __construct()
+   {
+       $this->historiques = new ArrayCollection();
+   }
 
  
 
@@ -197,6 +210,48 @@ public function getTypecourrier(): ?string
 public function setTypecourrier(string $typecourrier): self
 {
     $this->typecourrier = $typecourrier;
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Historique>
+ */
+public function getHistoriques(): Collection
+{
+    return $this->historiques;
+}
+
+public function addHistorique(Historique $historique): self
+{
+    if (!$this->historiques->contains($historique)) {
+        $this->historiques->add($historique);
+        $historique->setCourrier($this);
+    }
+
+    return $this;
+}
+
+public function removeHistorique(Historique $historique): self
+{
+    if ($this->historiques->removeElement($historique)) {
+        // set the owning side to null (unless already changed)
+        if ($historique->getCourrier() === $this) {
+            $historique->setCourrier(null);
+        }
+    }
+
+    return $this;
+}
+
+public function isIsDeleted(): ?bool
+{
+    return $this->isDeleted;
+}
+
+public function setIsDeleted(bool $isDeleted): self
+{
+    $this->isDeleted = $isDeleted;
 
     return $this;
 }

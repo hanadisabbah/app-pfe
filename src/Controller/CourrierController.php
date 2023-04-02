@@ -39,18 +39,18 @@ class CourrierController extends AbstractController
             return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
         }
         return $this->render('courrier/index.html.twig', [
-            'courriersLivre'   => $courrierRepository->findBy(['status' => 'livré']),
-            'courriersEnStock' => $courrierRepository->findBy(['status' => 'en_stock']),
-            'courriersEnCours' => $courrierRepository->findBy(['status' => 'en_cours']),
+            'courriersLivre'   => $courrierRepository->findBy(['status' => 'livré', 'isDeleted' => false]),
+            'courriersEnStock' => $courrierRepository->findBy(['status' => 'en_stock',  'isDeleted' => false]),
+            'courriersEnCours' => $courrierRepository->findBy(['status' => 'en_cours',  'isDeleted' => false]),
             'form'      => $form->createView()
         ]);
     }
 
     #[Route('/ajouter-courrier', name: 'app_courrier', methods: ['GET', 'POST'])]
-    public function ajouterCourrier(CourrierRepository $courrierRepository, Request $request): Response
+    public function ajouterCourrier(CourrierRepository $courrierRepository, Request $request, EntityManagerInterface $em): Response
     {
         $courrier = new Courrier();
-        if($request->query->get('ref')){
+        if ($request->query->get('ref')) {
             $ref = $request->query->get('ref');
             $courrier->setBarcode($ref);
         }
@@ -65,17 +65,23 @@ class CourrierController extends AbstractController
             $courrier->setCreatedAt(new \DateTime());
             $courrier->setStatus('en_stock');
             $courrierRepository->save($courrier, true);
-            /**
-             * Travail a faire aprés completer les relations d'historique
-             * creer une instance d'historique ( $historique = new Historique )
-             * $hist->setCourrier($courrier)
-             * $hist ......
-             * EM->persist($hist);EM->flush();
-             */
-            
+            // enregistrer une historique d'ajout d'un courrier
+            //1) on va instanvier un objet historique
+
+            $historique = new Historique();
+            $historique->setCourrier($courrier);
+            $historique->setUtilisateur($connectedAgent);
+            $date = date('Y-m-d H:i'); // objet (1234567) 2023-04-02 Hours:minutes
+            $historique->setComment("ajouter un courrier d'id: " . $courrier->getId() . " en $date");
+            $historique->setStatut($courrier->getStatus());
+            // 2) on va appeler doctrine pour sauvegarder lhistorique
+            $em->persist($historique);
+            $em->flush();
+
+
             return $this->redirectToRoute('app_courrier', [], Response::HTTP_SEE_OTHER);
         }
-        
+
         return $this->render('courrier/ajouter-courrier.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -83,7 +89,7 @@ class CourrierController extends AbstractController
 
 
     #[Route('/valider', name: 'valider', methods: ['GET', 'POST'])]
-    public function valider(CourrierRepository $courrierRepository, Request $request, EntityManagerInterface $em): Response
+    public function valider(CourrierRepository $courrierRepository,  Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createFormBuilder()->add('ref', TextType::class, ['attr' => ['class' => 'form-control']])->getForm();
         $form->handleRequest($request);
@@ -92,18 +98,44 @@ class CourrierController extends AbstractController
             $ref = $form->get('ref')->getData();
             $courrierExiste = $courrierRepository->findOneBy(['barcode' => $ref]);
             if ($courrierExiste) {
+
+                
+                // verification selecton agent agent connecter houwa 3end nafs el poste mta3 courrier 
+                // agent connecte
                 $agentConnecte = $this->getUser();
-                $poste        = $agentConnecte->getPost();
-                $courrierExiste->setStatus('en_cours');
-                $courrierExiste->setPostalSituation($poste->getLabel());
+
+                    // hanadi zadetha
+                    $historique = new Historique();
+                    $historique->setCourrier($courrierExiste);
+                    $historique->setUtilisateur($agentConnecte);
+                    $date = date('Y-m-d H:i'); // objet (1234567) 2023-04-02 Hours:minutes
+                    $historique->setComment("valider un courrier d'id: " . $courrierExiste->getId() . " en $date");
+                    $historique->setStatut($courrierExiste->getStatus());
+                    // 2) on va appeler doctrine pour sauvegarder lhistorique
+                    $em->persist($historique);
+                    $em->flush();
+                    //hanadi zadetha
+                //poste mta3 agent connecte
+                $posteAgent        = $agentConnecte->getPost();
+                // poste arrive mta3 courrier
+                $posteArriveCourrier = $courrierExiste->getArrivalPost();
+                if ($posteAgent == $posteArriveCourrier) { // agent connecte jibi menah poste teste hiya nafsaha fi courrier arrivalPost
+                    $courrierExiste->setStatus('livré');
+                } else {
+                    $courrierExiste->setStatus('en_cours');
+                }
+                $courrierExiste->setPostalSituation($posteAgent->getLabel());
                 $em->flush();
+
+            
                 return $this->redirectToRoute('afficher_courrier', ['id' => $courrierExiste->getId()], Response::HTTP_SEE_OTHER);
             } else {
+
+                return $this->redirectToRoute('app_courrier', ['ref' => $ref]);
                 
-                return $this->redirectToRoute('app_courrier',['ref'=>$ref]);
-               // return $this->redirectToRoute('valider', ['isExiste' => false, 'id' => false], Response::HTTP_SEE_OTHER);
             }
         }
+
         return $this->render('courrier/valider.html.twig', [
             'form'      => $form->createView()
         ]);
@@ -112,69 +144,35 @@ class CourrierController extends AbstractController
     #[Route('/afficher-courrier/{id}', name: 'afficher_courrier', methods: ['GET'])]
     public function afficherCourrier(Courrier $courrier): Response
     {
-       
         return $this->render('courrier/affichage.html.twig', [
             'courrier'      => $courrier
         ]);
     }
 
-    #[Route('/historique-courrier', name: 'historique_courrier', methods: ['GET', 'POST'])]
-    public function generHistorique(HistoriqueRepository $historiqueRepository, Request $request): Response
-    {
-        $historique = new Historique();
-        $form = $this->createForm(HistoriqueType::class, $historique);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //  $courrier->setCreatedAt(new \DateTime());
-            //  $courrier->setStatus('en_cours');
-            $historiqueRepository->save($historique, true);
-
-            return $this->redirectToRoute('historique_courrier', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->render('courrier/ajouter-historique.html.twig', [
-            'historiques' => $historiqueRepository->findAll(),
-            'form'      => $form->createView()
-        ]);
-    }
 
 
 
-   // #[Route('/changeStatus/{id}', name: 'change_statue', methods: ['GET', 'POST'])]
-   // public function changerStatusCourrier(Courrier $courrier, CourrierRepository $courrierRepository, Request $request): Response
- //   {
- //       $form = $this->createForm(CourrierStatusType::class, $courrier);
- //       $form->handleRequest($request);
-
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            //dd($courrier);
- //           $courrierRepository->save($courrier, true);
-
- //           return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
-//        }
-//        return $this->render('courrier/changer-status.html.twig', [
-//            'form'      => $form->createView()
- //       ]);
- //   }
-
-
-
-    //   #[Route('/{id}', name: 'app_courrier_show', methods: ['GET'])]
-    //   public function show(Courrier $courrier): Response
-    //   {
-    //       return $this->render('courrier/show.html.twig', [
-    //       'courrier' => $courrier,
-    //       ]);
-    //   }
 
     #[Route('/{id}/edit', name: 'app_courrier_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Courrier $courrier, CourrierRepository $courrierRepository): Response
+    public function edit(Request $request, Courrier $courrier, CourrierRepository $courrierRepository, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CourrierType::class, $courrier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $courrierRepository->save($courrier, true);
+            $connectedAgent = $this->getUser();
+            // partie historique
+            $historique = new Historique();
+            $historique->setCourrier($courrier);
+            $historique->setUtilisateur($connectedAgent);
+            $date = date('Y-m-d H:i'); // objet (1234567) 2023-04-02 Hours:minutes
+            $historique->setComment("modifier le courrier d'id: " . $courrier->getId() . " en $date");
+            $historique->setStatut($courrier->getStatus());
+            // 2) on va appeler doctrine pour sauvegarder lhistorique
+            $em->persist($historique);
+            $em->flush();
+            //partie historique
 
             return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -186,11 +184,34 @@ class CourrierController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_courrier_delete', methods: ['GET'])]
-    public function delete(Request $request, Courrier $courrier, CourrierRepository $courrierRepository): Response
+    public function delete(Courrier $courrier, CourrierRepository $courrierRepository, EntityManagerInterface $em): Response
     {
-        $courrierRepository->remove($courrier, true);
-
+       // $courrierRepository->remove($courrier, true);
+       $courrier->setIsDeleted(true);
+       $em->flush();
+        // hanadi zadetha
+        $connectedAgent = $this->getUser();
+        $historique = new Historique();
+        $historique->setCourrier($courrier);
+        $historique->setUtilisateur($connectedAgent);
+        $date = date('Y-m-d H:i'); // objet (1234567) 2023-04-02 Hours:minutes
+        $historique->setComment("supprimer un courrier d'id: " . $courrier->getId() . " en $date");
+        $historique->setStatut($courrier->getStatus());
+        // 2) on va appeler doctrine pour sauvegarder lhistorique
+        $em->persist($historique);
+        $em->flush();
+        //hanadi
 
         return $this->redirectToRoute('app_courrier_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/historique/{id}', name: 'historique_courrier', methods: ['GET'])]
+    public function historiqueCourrier(Courrier $courrier,Request $request): Response
+    {
+        $historiques = $courrier->getHistoriques();
+        return $this->render('courrier/historique.html.twig',[
+            'historiques' => $historiques,
+            'courrier'    => $courrier
+        ]);      
     }
 }

@@ -20,6 +20,14 @@ class Historique
     #[ORM\Column(length: 255)]
     private ?string $comment = null;
 
+    #[ORM\ManyToOne(inversedBy: 'historiques')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $utilisateur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'historiques')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Courrier $courrier = null;
+
     /*#[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;*/
 
@@ -63,4 +71,28 @@ class Historique
 
         return $this;
     }*/
+
+   public function getUtilisateur(): ?User
+   {
+       return $this->utilisateur;
+   }
+
+   public function setUtilisateur(?User $utilisateur): self
+   {
+       $this->utilisateur = $utilisateur;
+
+       return $this;
+   }
+
+   public function getCourrier(): ?Courrier
+   {
+       return $this->courrier;
+   }
+
+   public function setCourrier(?Courrier $courrier): self
+   {
+       $this->courrier = $courrier;
+
+       return $this;
+   }
 }

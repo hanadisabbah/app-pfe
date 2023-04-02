@@ -11,6 +11,7 @@ class Agent extends User
 
   #[ORM\ManyToOne(inversedBy: 'agent')]
   private ?Post $post = null;
+  
   private $role;
   public function setRole(string $role): ?string
     {
