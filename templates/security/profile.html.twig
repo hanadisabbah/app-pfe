@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Des Courriers{% endblock %}
-
+{% block title %}Profile
+{% endblock %}
 
 {% block body %}
 
@@ -90,8 +90,8 @@
 						<div class="page-title d-flex">
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
-								<span class="font-weight-semibold">Gestion</span>
-								- Courrier
+								<span class="font-weight-semibold">Mon Profile</span>
+							
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -110,18 +110,17 @@
 					class="content">
 					<!-- Basic datatable -->
 					<div class="card">
-						<div class="card-header header-elements-inline  text-center bg-info text-white">
-							<h5 class="card-title">Message !</h5>
+						<div class="card-header header-elements-inline">
+				
+
 						</div>
-						
 						<div class="card-body">
-                          <p>Type Courrier: {{ courrier.typeCourrier }}</p>
-                          <p>Poste de départ: {{ courrier.startingPost.label }}</p>
-                          <p>Poste d'arrivé: {{ courrier.arrivalPost.label }}</p>
+							{{form_start(form)}}
+							{{form_widget(form)}}
+							<button type="submit" class="mt-2 btn btn-warning">Mise à jour</button>
+							{{form_end(form)}}
 						</div>
-                        <div class="card-footer">
-                          Le courrier a été modifier avec succès
-						</div>
+
 
 					</div>
 					<!-- /basic datatable -->

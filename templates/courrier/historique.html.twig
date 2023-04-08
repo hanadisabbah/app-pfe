@@ -92,9 +92,9 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Courrier - Historique de courrier
+								- Historique courrier
 								{{ courrier.id }}
-                                <a href="{{ path('app_courrier_index') }}">retour à la liste</a>
+                                <a href="{{ path('app_courrier_index') }}" class="btn btn-default float-right">Retour à la liste</a>
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -118,6 +118,7 @@
 								<tr>
 									<th>Message</th>
 									<th>Date</th>
+									
 								</tr>
 							</thead>
 							<tbody>

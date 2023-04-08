@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Historiques{% endblock %}
+{% block title %}Liste Des Courriers
+{% endblock %}
 
 
 {% block body %}
@@ -91,7 +92,7 @@
 							<h4>
 								<i class="icon-arrow-left52 mr-2"></i>
 								<span class="font-weight-semibold">Gestion</span>
-								- Historique
+								- Courrier
 							</h4>
 							<a href="#" class="header-elements-toggle text-default d-md-none">
 								<i class="icon-more"></i>
@@ -110,27 +111,33 @@
 					class="content">
 					<!-- Basic datatable -->
 					<div class="card">
-						<div class="card-header header-elements-inline">
-							<h5 class="card-title">Ajouter Historique</h5>
+						<div class="card-header header-elements-inline  text-center bg-info text-white">
+							<h5 class="card-title">Success !</h5>
+
+						</div>
+						<div class="card-body">
+							<p>Code Barre:
+								{{ courrier.barcode }}</p>
+							<p>Type Courrier:
+								{{ courrier.typeCourrier }}</p>
+							<p>Poste de départ:
+								{{ courrier.startingPost.label }}</p>
+							<p>Poste d'arrivé:
+								{{ courrier.arrivalPost.label }}</p>
+							<a href="{{ path('app_courrier') }}" class="btn btn-primary">Ajouter un autre Courrier</a>
+							<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+							<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+						</div>
+						<div class="card-footer">
+							Le courrier a été ajouter  avec succees
 						</div>
 
-						<div class="modal-body">
-							{{ form_start(form) }}
-							{{ form_widget(form) }}
-							<button class="btn btn-success" type="submit">Enregisterer</button>
-							{{ form_end(form) }}
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-						</div>
 					</div>
 					<!-- /basic datatable -->
 
 
 				</div>
 				<!-- /content area -->
-
-
 			</div>
 			<!-- /main content -->
 			<!-- /page content -->

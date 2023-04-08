@@ -28,6 +28,9 @@ class Historique
     #[ORM\JoinColumn(nullable: false)]
     private ?Courrier $courrier = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $updatedAt = null;
+
     /*#[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;*/
 
@@ -92,6 +95,18 @@ class Historique
    public function setCourrier(?Courrier $courrier): self
    {
        $this->courrier = $courrier;
+
+       return $this;
+   }
+
+   public function getUpdatedAt(): ?\DateTimeInterface
+   {
+       return $this->updatedAt;
+   }
+
+   public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+   {
+       $this->updatedAt = $updatedAt;
 
        return $this;
    }

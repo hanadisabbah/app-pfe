@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Postes{% endblock %}
+{% block title %}Liste des Postes
+{% endblock %}
 
 
 {% block body %}
@@ -109,7 +110,11 @@
 				<div
 					class="content">
 					<!-- Basic datatable -->
+
 					<div class="card">
+					<!-- hanadi etjareb -->
+							<div class="card-header bg-success">Poste ajouter avec succès</div>
+					<!-- hanadi etjareb -->
 						<div class="card-header header-elements-inline">
 							<h5 class="card-title">Liste des postes</h5>
 							<!-- Button trigger modal -->
@@ -117,7 +122,6 @@
 								+Nouvelle Poste
 							</button>
 						</div>
-
 
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,7 +180,7 @@
 				</div>
 				<!-- /content area -->
 
-			
+
 			</div>
 			<!-- /main content -->
 			<!-- /page content -->
@@ -195,4 +199,3 @@
 			<script src="{{ asset('admin-assets/assets/js/app.js') }}"></script>
 			<script src="{{ asset('admin-assets/js/demo_pages/datatables_basic.js') }}"></script>
 		{% endblock %}
-

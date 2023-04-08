@@ -177,8 +177,9 @@
 										</td>
 
 										<td>
-											<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+											{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
+											<a href="{{ path('historique_courrier',{'id':courrier.id}) }}" class="btn btn-sm btn-info">historiques</a>
 											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
 										</td>
 
@@ -269,8 +270,9 @@
 										</td>
 
 										<td>
-											<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
-											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>
+											{#<a href="{{ path('app_courrier_delete',{'id':courrier.id}) }}" class="btn btn-sm btn-danger">supprimer</a>
+											<a href="{{ path('app_courrier_edit',{'id':courrier.id}) }}" class="btn btn-sm btn-warning">modifier</a>#}
+											<a href="{{ path('historique_courrier',{'id':courrier.id}) }}" class="btn btn-sm btn-info">historiques</a>
 											{#<a href="{{ path('change_statue',{'id':courrier.id}) }}" class="btn btn-sm btn-info">changer status</a>#}
 										</td>
 

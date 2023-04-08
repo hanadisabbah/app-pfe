@@ -48,7 +48,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setIsDeleted(false);
             $postRepository->save($post, true);
-            ;
+            
             $em->persist($post);
             $em->flush();
             return $this->redirectToRoute('app_post_index');
