@@ -106,14 +106,14 @@ class CourrierController extends AbstractController
             $ref = $form->get('ref')->getData();
             $courrierExiste = $courrierRepository->findOneBy(['barcode' => $ref]);
             if ($courrierExiste) {
-
+                
                 // verification selecton agent connecter howa 3end nafes poste mat3 courrier
                 // agent connecte
                 $agentConnecte = $this->getUser();
-
                     // hanadi zidtha
                     $historique = new Historique();
                     $historique->setCourrier($courrierExiste);
+                    $historique->setUpdatedAt(new \DateTime());
                     $historique->setUtilisateur($agentConnecte);
                     $date = date('Y-m-d H:i'); //objet(1234567) 2023-04-02 Hours:minutes
                     $historique->setComment("valider un courrier d'id: " . $courrierExiste->getId() . " en $date");
@@ -130,6 +130,9 @@ class CourrierController extends AbstractController
                     $courrierExiste->setStatus('livré');
                 } else {
                     $courrierExiste->setStatus('en_cours');
+                }
+                if($posteAgent == $courrierExiste->getStartingPost()){
+                    $courrierExiste->setStatus('en_stock');
                 }
                 $courrierExiste->setPostalSituation($posteAgent->getLabel());
                 $em->flush();
